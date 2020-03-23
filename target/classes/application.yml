@@ -1,0 +1,19 @@
+server:
+  port: 9090
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: order-service
+          uri: http://${ORDER_SERVICE_URL:localhost}:9001/
+          predicates:
+            - Path=/v2/orders
+        - id: stock-service
+          uri: http://${STOCK_SERVICE_URL:localhost}:9004/
+          predicates:
+            - Path=/v2/stock
+        - id: auth-service
+          uri: http://${AUTH_SERVER_URL:localhost}:8090/
+          predicates:
+            - Path=/oauth/token
