@@ -6,14 +6,22 @@ spring:
     gateway:
       routes:
         - id: order-service
-          uri: http://${ORDER_SERVICE_URL:localhost}:9001/
+          uri: http://${ORDER_SERVER_URL:localhost}:9001/
           predicates:
-            - Path=/v2/orders
+            - Path=/v2/orders/**
         - id: stock-service
-          uri: http://${STOCK_SERVICE_URL:localhost}:9004/
+          uri: http://${STOCK_SERVER_URL:localhost}:9004/
           predicates:
-            - Path=/v2/stock
+            - Path=/v2/stock/**
         - id: auth-service
           uri: http://${AUTH_SERVER_URL:localhost}:8090/
           predicates:
-            - Path=/oauth/token
+            - Path=/oauth/token/**
+        - id: shipment-service
+          uri: http://${SHIPMENT_SERVER_URL:localhost}:9002/
+          predicates:
+            - Path=/v2/shipment/**
+        - id: query-service
+          uri: http://${QUERY_SERVER_URL:localhost}:9003/
+          predicates:
+            - Path=/v2/query/orders/**
